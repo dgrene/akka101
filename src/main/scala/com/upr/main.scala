@@ -4,21 +4,19 @@ package com.upr
   * Created by deepak on 3/3/17.
   */
 import scala.concurrent.Future
-
-import akka.actor.{ ActorSystem , Actor, Props }
+import akka.actor.{Actor, ActorSystem, Props}
 import akka.event.Logging
 import akka.util.Timeout
-
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.Http.ServerBinding
 import akka.http.scaladsl.server.Directives._
 import akka.stream.ActorMaterializer
-
-import com.typesafe.config.{ Config, ConfigFactory }
+import com.typesafe.config.{Config, ConfigFactory}
+import kamon.Kamon
 
 object Main extends App
   with RequestTimeout {
-
+  Kamon.start()
   val config = ConfigFactory.load()
   val host = config.getString("http.host") // Gets the host and a port from the configuration
   val port = config.getInt("http.port")
